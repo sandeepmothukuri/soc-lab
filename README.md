@@ -218,29 +218,21 @@ sudo systemctl restart wazuh-manager
 ## 📸 Lab Evidence
 
 ### 🧠 SOC Architecture
-
-![Architecture](images/architecture/soc-architecture)
+![Architecture](images/architecture/soc-architecture/Architecture.png)
 
 ### 📊 Wazuh Dashboard
-
-![Dashboard](images/architecture/wazuh-dashboard)
+![Dashboard](images/architecture/wazuh-dashboard/Wazuh Dashboard and Agent Deployment.png)
 
 ### 🚨 Brute Force Detection
-
-![Brute Force](images/architecture/bruteforce-alert)
+![Brute Force](images/architecture/bruteforce-alert/event-4625 failed to logon.png)
 
 ### ⚔️ Attack Simulation
-
-![Attack](images/attacks/nmap-scan)
+![Attack](images/attacks/nmap-scan/Interpreting Scan Results.png)
 
 ### 🪟 Sysmon Logs
-
-![Sysmon](images/logs/sysmon-process)
-
+![Sysmon](images/logs/sysmon-process/Sysmon logs network.png)
 
 \---
-
-
 
 # 🚀 Author
 
