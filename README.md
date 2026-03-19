@@ -218,19 +218,39 @@ sudo systemctl restart wazuh-manager
 ## 📸 Lab Evidence
 
 ### 🧠 SOC Architecture
-![Architecture](images/architecture/soc-architecture/architecture.png)
+
+![Architecture](images/architecture/soc-architecture/Architecture.png)
+![Elastic Stack](images/architecture/soc-architecture/elastic-stack-integration.png)
+![ELK Wazuh](images/architecture/soc-architecture/combining-elk-wazuh-hids-and-elastalert-for-optimal-performance.png)
+![Wazuh Components](images/architecture/soc-architecture/wazuh-central-components.png)
 
 ### 📊 Wazuh Dashboard
+
 ![Dashboard](images/architecture/wazuh-dashboard/wazuh-dashboard-and-agent-deployment.png)
+![Log Analysis](images/architecture/wazuh-dashboard/log-data-analysis.png)
+![Cloud Security](images/architecture/wazuh-dashboard/monitoring-and-securing-cloud-workloads-with-wazuh.png)
+![Microsoft Graph](images/architecture/wazuh-dashboard/monitoring-microsoft-graph-services-with-wazuh.png)
 
 ### 🚨 Brute Force Detection
-![Brute Force](images/architecture/bruteforce-alert/windows-event-id-4625-failed-logon.png)
+
+![4625 Failed Logon](images/architecture/bruteforce-alert/event-4625-failed-to-logon.png)
+![Detailed Logs](images/architecture/bruteforce-alert/failed-logon-events-id-4625-when-successfully-scanning-and-deploying-to-computers.png)
+![Process Info](images/architecture/bruteforce-alert/process-information.png)
+![Windows Event](images/architecture/bruteforce-alert/windows-event-id-4625-failed-logon.png)
 
 ### ⚔️ Attack Simulation
-![Attack](images/attacks/nmap-scan/interpreting-scan-results.png)
+
+![Nmap Result](images/attacks/nmap-scan/interpreting-scan-results.png)
+![Brute Force](images/attacks/nmap-scan/brute-force-attack.jpg)
+![Terminal Scan](images/attacks/nmap-scan/nmap-scan-terminal-kali.webp)
+![External Scan](images/attacks/nmap-scan/nmap-external-port-scan-result.webp)
 
 ### 🪟 Sysmon Logs
-![Sysmon](images/logs/sysmon-process/sysmon-logs-network.png)
+
+![Network](images/logs/sysmon-process/sysmon-logs-network.png)
+![Event Log](images/logs/sysmon-process/generated-event-is-recorded-in-the-windows-event-log.png)
+![RDP Issue](images/logs/sysmon-process/sysmon-event-id-3---rdp-logon-issue-initiated--field-allways-false.png)
+![Workstation](images/logs/sysmon-process/workstation-logs.png)
 
 ---
 
