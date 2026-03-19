@@ -4,7 +4,7 @@
 
 This project demonstrates a fully functional Security Operations Center (SOC) lab using Wazuh SIEM, Windows endpoint logging, and Kali Linux for attack simulation and detection.
 
----
+\---
 
 # ⚙️ Installation Guide
 
@@ -14,17 +14,17 @@ This project demonstrates a fully functional Security Operations Center (SOC) la
 * VMware → https://www.vmware.com/
 * Minimum: 8 GB RAM, 100 GB storage
 
----
+\---
 
 ## 🧱 Lab Setup
 
-| Machine      | Role     | OS           |
-| ------------ | -------- | ------------ |
-| Wazuh Server | SIEM     | Ubuntu 22.04 |
-| Windows VM   | Target   | Windows 10   |
-| Kali Linux   | Attacker | Kali Linux   |
+|Machine|Role|OS|
+|-|-|-|
+|Wazuh Server|SIEM|Ubuntu 22.04|
+|Windows VM|Target|Windows 10|
+|Kali Linux|Attacker|Kali Linux|
 
----
+\---
 
 ## 🐧 Install Wazuh SIEM
 
@@ -32,7 +32,7 @@ Official Guide:
 https://documentation.wazuh.com/current/installation-guide/
 
 ```bash
-sudo apt update && sudo apt upgrade -y
+sudo apt update \\\&\\\& sudo apt upgrade -y
 curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
 sudo bash wazuh-install.sh -a
 ```
@@ -43,7 +43,7 @@ Access dashboard:
 https://<WAZUH-IP>
 ```
 
----
+\---
 
 ## 🪟 Windows Endpoint Setup
 
@@ -55,7 +55,7 @@ https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
 sysmon.exe -i sysmon-config.xml
 ```
 
----
+\---
 
 ### Install Wazuh Agent
 
@@ -64,14 +64,14 @@ https://documentation.wazuh.com/current/installation-guide/wazuh-agent/
 Download:
 https://packages.wazuh.com/4.x/windows/wazuh-agent.msi
 
----
+\---
 
 ### Configure Agent
 
 Edit:
 
 ```
-C:\Program Files (x86)\ossec-agent\ossec.conf
+C:\\\\Program Files (x86)\\\\ossec-agent\\\\ossec.conf
 ```
 
 ```xml
@@ -84,12 +84,12 @@ Start agent:
 net start wazuh
 ```
 
----
+\---
 
 ## 🔌 Connect Agent
 
 ```bash
-sudo /var/ossec/bin/manage_agents
+sudo /var/ossec/bin/manage\\\_agents
 ```
 
 * Add agent
@@ -98,7 +98,7 @@ sudo /var/ossec/bin/manage_agents
 On Windows:
 
 ```
-manage_agents.exe
+manage\\\_agents.exe
 ```
 
 Restart:
@@ -108,7 +108,7 @@ net stop wazuh
 net start wazuh
 ```
 
----
+\---
 
 # ⚔️ Attack Simulation
 
@@ -124,7 +124,7 @@ nmap -sS <target-ip>
 hydra -l admin -P rockyou.txt rdp://<target-ip>
 ```
 
----
+\---
 
 # 🚨 Detection Workflow
 
@@ -134,17 +134,17 @@ hydra -l admin -P rockyou.txt rdp://<target-ip>
 
 ## Key Event IDs
 
-| Event ID | Description          |
-| -------- | -------------------- |
-| 4625     | Failed login         |
-| 4624     | Successful login     |
-| 4740     | Account lockout      |
-| 4672     | Privilege escalation |
-| 4663     | File access          |
-| Sysmon 1 | Process creation     |
-| Sysmon 3 | Network connection   |
+|Event ID|Description|
+|-|-|
+|4625|Failed login|
+|4624|Successful login|
+|4740|Account lockout|
+|4672|Privilege escalation|
+|4663|File access|
+|Sysmon 1|Process creation|
+|Sysmon 3|Network connection|
 
----
+\---
 
 ## View Alerts
 
@@ -156,13 +156,13 @@ Search:
 4625
 ```
 
----
+\---
 
 ## Custom Detection Rule
 
 ```xml
 <rule id="100001" level="10">
-  <if_sid>18107</if_sid>
+  <if\\\_sid>18107</if\\\_sid>
   <description>Brute force attack detected</description>
   <mitre>T1110</mitre>
 </rule>
@@ -174,7 +174,7 @@ Restart:
 sudo systemctl restart wazuh-manager
 ```
 
----
+\---
 
 # 📊 Detection Use Cases
 
@@ -183,16 +183,16 @@ sudo systemctl restart wazuh-manager
 * Privilege escalation detection
 * Network scanning detection
 
----
+\---
 
-# 🎯 MITRE ATT&CK Mapping
+# 🎯 MITRE ATT\&CK Mapping
 
 * T1110 → Brute Force
 * T1046 → Network Scanning
 * T1059 → Command Execution
 * T1078 → Valid Accounts
 
----
+\---
 
 # 📚 References
 
@@ -202,7 +202,7 @@ sudo systemctl restart wazuh-manager
 * MITRE → https://attack.mitre.org/
 * Kali Linux → https://www.kali.org/
 
----
+\---
 
 # 💼 Skills Demonstrated
 
@@ -211,8 +211,49 @@ sudo systemctl restart wazuh-manager
 * Threat detection
 * Incident response
 
----
+\---
+
+
+
+\## 📸 Lab Evidence
+
+
+
+\### 🧠 SOC Architecture
+
+!\[Architecture](architecture/soc-architecture.png)
+
+
+
+\### 📊 Wazuh Dashboard
+
+!\[Dashboard](architecture/screenshots/wazuh-dashboard.png)
+
+
+
+\### 🚨 Brute Force Detection
+
+!\[Brute Force](architecture/screenshots/bruteforce-alert.png)
+
+
+
+\### ⚔️ Attack Simulation
+
+!\[Attack](scripts/nmap-scan.png)
+
+
+
+\### 🪟 Sysmon Logs
+
+!\[Sysmon](logs/sysmon-process.png)
+
+
+
+\---
+
+
 
 # 🚀 Author
 
 Sandeep Mothukuri
+
