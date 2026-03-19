@@ -18,12 +18,26 @@ This project demonstrates a fully functional Security Operations Center (SOC) la
 
 ## 🧪 Incident Simulation Summary
 
-Simulated brute-force attack using Hydra against Windows RDP.
+A brute-force attack was simulated using Hydra against a Windows 10 RDP service.
 
-- Detection via Wazuh SIEM
-- Correlated Event ID 4625 (failed login attempts)
-- Triggered custom rule (MITRE T1110)
-- Investigated logs using Wazuh dashboard
+### 🔍 Detection
+- Wazuh SIEM detected multiple failed login attempts
+- Event ID 4625 triggered alerts
+- Custom detection rule (MITRE ATT&CK T1110 - Brute Force) activated
+
+### 🧠 Analysis
+- Correlated multiple failed login events from the same source
+- Identified attack pattern consistent with brute-force behavior
+- Reviewed Sysmon logs for process and network activity
+
+### 🚨 Response
+- Investigated affected endpoint
+- Validated no successful compromise (Event ID 4624 not correlated)
+- Recommended account lockout policies and monitoring
+
+### 🎯 Outcome
+- Successfully detected and analyzed simulated attack
+- Demonstrated SIEM monitoring, log correlation, and incident investigation skills
 
 \---
 
