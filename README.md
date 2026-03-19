@@ -16,13 +16,14 @@ This project demonstrates a fully functional Security Operations Center (SOC) la
 
 \---
 
-## 🧱 Lab Setup
+## 🧪 Incident Simulation Summary
 
-|Machine|Role|OS|
-|-|-|-|
-|Wazuh Server|SIEM|Ubuntu 22.04|
-|Windows VM|Target|Windows 10|
-|Kali Linux|Attacker|Kali Linux|
+Simulated brute-force attack using Hydra against Windows RDP.
+
+- Detection via Wazuh SIEM
+- Correlated Event ID 4625 (failed login attempts)
+- Triggered custom rule (MITRE T1110)
+- Investigated logs using Wazuh dashboard
 
 \---
 
