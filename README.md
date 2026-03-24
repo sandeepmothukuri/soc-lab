@@ -1,8 +1,26 @@
 # 🔐 SOC Analyst Home Lab
 
+## ⚡ Quick Demo
+
+- Attack: Hydra brute-force on RDP
+- Detection: Event ID 4625 correlation
+- SIEM: Wazuh
+- Result: Attack detected, no successful compromise
+
+\---
+
 ## 📌 Overview
 
-This project demonstrates a fully functional Security Operations Center (SOC) lab using Wazuh SIEM, Windows endpoint logging, and Kali Linux for attack simulation and detection.
+🚨 Detected and analyzed a brute-force attack using Wazuh SIEM, Sysmon telemetry, and MITRE ATT&CK mapping in a self-built SOC lab.
+
+\---
+
+## 🏗️ Architecture Overview
+
+- Wazuh Manager (Ubuntu) – SIEM core
+- Windows 10 – endpoint with Sysmon logging
+- Kali Linux – attack simulation
+- Logs → Wazuh Agent → Elasticsearch → Kibana Dashboard
 
 \---
 
@@ -24,6 +42,13 @@ A brute-force attack was simulated using Hydra against a Windows 10 RDP service.
 - Wazuh SIEM detected multiple failed login attempts
 - Event ID 4625 triggered alerts
 - Custom detection rule (MITRE ATT&CK T1110 - Brute Force) activated
+
+### 🧠 Detection Logic
+- Trigger: Multiple failed login attempts (>5 within short time)
+- Event ID: 4625
+- Correlation: Same source IP
+- Rule ID: 100001 (custom rule)
+- MITRE: T1110 (Brute Force)
 
 ### 🧠 Analysis
 - Correlated multiple failed login events from the same source
@@ -174,6 +199,18 @@ hydra -l admin -P rockyou.txt rdp://<target-ip>
 
 ## View Alerts
 
+# ⏱️ Incident Timeline
+
+1. Nmap scan detected (T1046)
+2. Brute-force attack initiated via Hydra
+3. Multiple failed logins (Event ID 4625)
+4. Wazuh alert triggered
+5. Logs correlated in SIEM
+6. No successful login (4624 not found)
+7. Incident closed
+
+\---
+
 Go to Wazuh Dashboard → Security Events
 
 Search:
@@ -232,10 +269,12 @@ sudo systemctl restart wazuh-manager
 
 # 💼 Skills Demonstrated
 
-* SIEM deployment
-* Log analysis
-* Threat detection
-* Incident response
+## 💡 Why This Project Matters
+
+- Demonstrates real SOC detection workflow
+- Shows attack simulation + detection capability
+- Applies MITRE ATT&CK framework
+- Proves hands-on SIEM and incident response skills
 
 \---
 
