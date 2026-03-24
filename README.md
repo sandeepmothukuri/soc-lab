@@ -58,7 +58,7 @@ Official Guide:
 https://documentation.wazuh.com/current/installation-guide/
 
 ```bash
-sudo apt update \\\&\\\& sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
 sudo bash wazuh-install.sh -a
 ```
@@ -97,7 +97,7 @@ https://packages.wazuh.com/4.x/windows/wazuh-agent.msi
 Edit:
 
 ```
-C:\\\\Program Files (x86)\\\\ossec-agent\\\\ossec.conf
+C:\Program Files (x86)\ossec-agent\ossec.conf
 ```
 
 ```xml
@@ -115,7 +115,7 @@ net start wazuh
 ## 🔌 Connect Agent
 
 ```bash
-sudo /var/ossec/bin/manage\\\_agents
+sudo /var/ossec/bin/manage_agents
 ```
 
 * Add agent
@@ -124,7 +124,7 @@ sudo /var/ossec/bin/manage\\\_agents
 On Windows:
 
 ```
-manage\\\_agents.exe
+manage_agents.exe
 ```
 
 Restart:
@@ -188,7 +188,7 @@ Search:
 
 ```xml
 <rule id="100001" level="10">
-  <if\\\_sid>18107</if\\\_sid>
+  <if_sid>18107</if_sid>
   <description>Brute force attack detected</description>
   <mitre>T1110</mitre>
 </rule>
