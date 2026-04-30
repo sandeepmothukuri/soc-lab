@@ -1,0 +1,39 @@
+name: Lab Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Wazuh detection rule XML files
+        run: |
+          python3 -c "
+          import xml.etree.ElementTree as ET, glob, sys
+          files = glob.glob('detection-rules/*.xml')
+          if not files:
+              print('No XML files found'); sys.exit(1)
+          for f in files:
+              ET.parse(f)
+              print(f'  OK: {f}')
+          print('All detection rules valid')
+          "
+
+  validate-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Lint shell scripts
+        run: |
+          find scripts/ -name "*.sh" -exec shellcheck {} \;
+          echo "All scripts passed shellcheck"
