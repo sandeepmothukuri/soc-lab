@@ -1,86 +1,60 @@
 # 🔐 SOC Analyst Home Lab
 
+[![Lab Validation](https://github.com/sandeepmothukuri/soc-lab/actions/workflows/validate.yml/badge.svg)](https://github.com/sandeepmothukuri/soc-lab/actions)
+[![Wazuh](https://img.shields.io/badge/SIEM-Wazuh-0066CC?logo=wazuh&logoColor=white)](https://wazuh.com/)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE-ATT%26CK-red)](https://attack.mitre.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/sandeepmothukuri/soc-lab?style=social)](https://github.com/sandeepmothukuri/soc-lab)
+
+> **Hands-on SOC analyst lab** — brute-force attack simulation, endpoint detection with Wazuh SIEM + Sysmon, and MITRE ATT&CK mapping. Built from scratch to demonstrate real L1/L2 SOC detection workflows.
+
+---
+
 ## ⚡ Quick Demo
 
-- Attack: Hydra brute-force on RDP
-- Detection: Event ID 4625 correlation
-- SIEM: Wazuh
-- Result: Attack detected, no successful compromise
+| | |
+|---|---|
+| **Attack** | Hydra brute-force on RDP |
+| **Detection** | Event ID 4625 correlation |
+| **SIEM** | Wazuh |
+| **Result** | Attack detected, no successful compromise |
+| **MITRE** | T1110 — Brute Force |
 
-\---
+---
 
 ## 📌 Overview
 
-🚨 Detected and analyzed a brute-force attack using Wazuh SIEM, Sysmon telemetry, and MITRE ATT&CK mapping in a self-built SOC lab.
+Detected and analyzed a brute-force attack using **Wazuh SIEM**, **Sysmon** telemetry, and **MITRE ATT&CK** mapping in a self-built SOC home lab.
 
-\---
+---
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture
 
-- Wazuh Manager (Ubuntu) – SIEM core
-- Windows 10 – endpoint with Sysmon logging
-- Kali Linux – attack simulation
-- Logs → Wazuh Agent → Elasticsearch → Kibana Dashboard
+```
+Kali Linux (Attacker)
+        │
+        ▼  Hydra / Nmap
+Windows 10 Endpoint
+   ├─ Sysmon (process/network telemetry)
+   └─ Wazuh Agent
+        │
+        ▼
+Wazuh Manager (Ubuntu)
+   ├─ Elasticsearch (log storage)
+   └─ Kibana Dashboard (visualization)
+```
 
-\---
+---
 
-# ⚙️ Installation Guide
+## ⚙️ Installation Guide
 
-## 🖥️ Prerequisites
+### Prerequisites
 
-* VirtualBox → https://www.virtualbox.org/
-* VMware → https://www.vmware.com/
-* Minimum: 8 GB RAM, 100 GB storage
+- VirtualBox → https://www.virtualbox.org/
+- VMware → https://www.vmware.com/
+- Minimum: 8 GB RAM, 100 GB storage
 
-\---
-
-## 🧪 Incident Simulation Summary
-
-A brute-force attack was simulated using Hydra against a Windows 10 RDP service.
-
-### 🔍 Detection
-- Wazuh SIEM detected multiple failed login attempts
-- Event ID 4625 triggered alerts
-- Custom detection rule (MITRE ATT&CK T1110 - Brute Force) activated
-
-### 🧠 Detection Logic
-- Trigger: Multiple failed login attempts (>5 within short time)
-- Event ID: 4625
-- Correlation: Same source IP
-- Rule ID: 100001 (custom rule)
-- MITRE: T1110 (Brute Force)
-
-### 🧠 Analysis
-- Correlated multiple failed login events from the same source
-- Identified attack pattern consistent with brute-force behavior
-- Reviewed Sysmon logs for process and network activity
-
-### 🚨 Response
-- Investigated affected endpoint
-- Validated no successful compromise (Event ID 4624 not correlated)
-- Recommended account lockout policies
-
-### 🎯 Outcome
-- Successfully detected and analyzed the attack
-- Demonstrated SIEM monitoring and incident investigation skills
-
-\---
-
-## 🧰 Tools Used
-
-- Wazuh SIEM  
-- Sysmon  
-- Kali Linux  
-- Hydra  
-- Nmap  
-- Windows Event Viewer
-
-\---
-
-## 🐧 Install Wazuh SIEM
-
-Official Guide:
-https://documentation.wazuh.com/current/installation-guide/
+### Deploy Wazuh SIEM
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -88,140 +62,68 @@ curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
 sudo bash wazuh-install.sh -a
 ```
 
-Access dashboard:
+Access dashboard: `https://<WAZUH-IP>`
 
-```
-https://<WAZUH-IP>
-```
-
-\---
-
-## 🪟 Windows Endpoint Setup
-
-### Install Sysmon
-
-https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
+### Windows Endpoint — Install Sysmon
 
 ```powershell
 sysmon.exe -i sysmon-config.xml
 ```
 
-\---
+### Windows Endpoint — Install Wazuh Agent
 
-### Install Wazuh Agent
+Download: https://packages.wazuh.com/4.x/windows/wazuh-agent.msi
 
-https://documentation.wazuh.com/current/installation-guide/wazuh-agent/
-
-Download:
-https://packages.wazuh.com/4.x/windows/wazuh-agent.msi
-
-\---
-
-### Configure Agent
-
-Edit:
-
-```
-C:\Program Files (x86)\ossec-agent\ossec.conf
-```
-
+Edit `C:\Program Files (x86)\ossec-agent\ossec.conf`:
 ```xml
 <address>WAZUH-IP</address>
 ```
-
-Start agent:
 
 ```powershell
 net start wazuh
 ```
 
-\---
-
-## 🔌 Connect Agent
+### Connect Agent to Manager
 
 ```bash
 sudo /var/ossec/bin/manage_agents
 ```
 
-* Add agent
-* Copy key
+---
 
-On Windows:
-
-```
-manage_agents.exe
-```
-
-Restart:
-
-```powershell
-net stop wazuh
-net start wazuh
-```
-
-\---
-
-# ⚔️ Attack Simulation
-
-## Nmap Scan
+## ⚔️ Attack Simulation
 
 ```bash
+# Network scan
 nmap -sS <target-ip>
-```
 
-## Brute Force
-
-```bash
+# Brute force RDP
 hydra -l admin -P rockyou.txt rdp://<target-ip>
 ```
 
-\---
+---
 
-# 🚨 Detection Workflow
+## 🚨 Detection Workflow
 
-## Generate Logs
+### Key Windows Event IDs
 
-* Enter wrong password multiple times on Windows
+| Event ID | Description |
+|---|---|
+| 4625 | Failed login attempt |
+| 4624 | Successful login |
+| 4740 | Account lockout |
+| 4672 | Privilege assignment |
+| 4663 | File access |
+| Sysmon 1 | Process creation |
+| Sysmon 3 | Network connection |
 
-## Key Event IDs
+### Detection Logic
 
-|Event ID|Description|
-|-|-|
-|4625|Failed login|
-|4624|Successful login|
-|4740|Account lockout|
-|4672|Privilege escalation|
-|4663|File access|
-|Sysmon 1|Process creation|
-|Sysmon 3|Network connection|
+- **Trigger:** 5+ failed logins from the same source IP within 60 seconds
+- **Rule ID:** 100001 (custom)
+- **MITRE:** T1110 — Brute Force
 
-\---
-
-# View Alerts
-
-## ⏱️ Incident Timeline
-
-1. Nmap scan detected (T1046)
-2. Brute-force attack initiated via Hydra
-3. Multiple failed logins (Event ID 4625)
-4. Wazuh alert triggered
-5. Logs correlated in SIEM
-6. No successful login (4624 not found)
-7. Incident closed
-
-\---
-
-Go to Wazuh Dashboard → Security Events
-
-Search:
-
-```
-4625
-```
-
-\---
-
-## Custom Detection Rule
+### Custom Wazuh Rule
 
 ```xml
 <rule id="100001" level="10">
@@ -231,54 +133,36 @@ Search:
 </rule>
 ```
 
-Restart:
-
 ```bash
 sudo systemctl restart wazuh-manager
 ```
 
-\---
+---
 
-# 📊 Detection Use Cases
+## 📅 Incident Timeline
 
-* Brute force attack detection
-* Suspicious login monitoring
-* Privilege escalation detection
-* Network scanning detection
+| Step | Event |
+|---|---|
+| 1 | Nmap scan detected (T1046) |
+| 2 | Hydra brute-force initiated |
+| 3 | Multiple Event ID 4625 alerts fired |
+| 4 | Wazuh custom rule triggered |
+| 5 | Logs correlated in SIEM |
+| 6 | No 4624 found — no successful compromise |
+| 7 | Incident closed as contained |
 
-\---
+---
 
-# 🎯 MITRE ATT\&CK Mapping
+## 🎯 MITRE ATT&CK Mapping
 
-* T1110 → Brute Force
-* T1046 → Network Scanning
-* T1059 → Command Execution
-* T1078 → Valid Accounts
+| Technique | ID | Description |
+|---|---|---|
+| Brute Force | T1110 | Multiple failed login attempts |
+| Network Scanning | T1046 | Nmap port scan |
+| Command Execution | T1059 | Shell commands on attacker |
+| Valid Accounts | T1078 | Target for credential access |
 
-\---
-
-# 📚 References
-
-* Wazuh → https://wazuh.com/
-* Documentation → https://documentation.wazuh.com/
-* Sysmon → https://learn.microsoft.com/en-us/sysinternals/
-* MITRE → https://attack.mitre.org/
-* Kali Linux → https://www.kali.org/
-
-\---
-
-# 💼 Skills Demonstrated
-
-## 💡 Why This Project Matters
-
-- Demonstrates real SOC detection workflow
-- Shows attack simulation + detection capability
-- Applies MITRE ATT&CK framework
-- Proves hands-on SIEM and incident response skills
-
-\---
-
-
+---
 
 ## 📸 Lab Evidence
 
@@ -317,20 +201,24 @@ sudo systemctl restart wazuh-manager
 ![RDP Issue](images/logs/sysmon-process/sysmon-event-id-3---rdp-logon-issue-initiated--field-allways-false.png)
 ![Workstation](images/logs/sysmon-process/workstation-logs.png)
 
-\---
+---
 
-## 🚀 Author
-Sandeep Mothukuri
+## 💼 Skills Demonstrated
 
-
+- Real SOC detection workflow (attack → alert → investigation → closure)
+- SIEM deployment and custom rule authoring (Wazuh)
+- Endpoint telemetry with Sysmon
+- MITRE ATT&CK framework application
+- Incident timeline reconstruction
 
 ---
 
 ## 👤 Author
 
 **Sandeep Mothukuri**
+- Website: [cybertechnology.in](https://cybertechnology.in)
 - GitHub: [@sandeepmothukuri](https://github.com/sandeepmothukuri)
-- Portfolio: [github.com/sandeepmothukuri](https://github.com/sandeepmothukuri)
+- LinkedIn: [sandeepmothukuris](https://www.linkedin.com/in/sandeepmothukuris)
 
 ---
 
@@ -339,7 +227,7 @@ Sandeep Mothukuri
 | Repository | Description |
 |---|---|
 | [ai-soc-lab](https://github.com/sandeepmothukuri/ai-soc-lab) | AI-augmented SOC with Wazuh + TheHive + Ollama (LLaMA3) for automated triage |
-| [advanced-soc-lab-v2.0](https://github.com/sandeepmothukuri/advanced-soc-forge) | 12-tool SOC lab with OpenSearch, Suricata, Zeek, MISP, Caldera, Velociraptor |
+| [advanced-soc-forge](https://github.com/sandeepmothukuri/advanced-soc-forge) | 12-tool SOC lab with OpenSearch, Suricata, Zeek, MISP, Caldera, Velociraptor |
 | [Autonomous-SOC-Lab](https://github.com/sandeepmothukuri/Autonomous-SOC-Lab) | Autonomous SOC with AI-driven detection and self-healing playbooks |
 | [soc-threat-hunting-lab](https://github.com/sandeepmothukuri/soc-threat-hunting-lab) | Threat detection lab — Zeek, RITA, Arkime, Velociraptor, OSQuery, MISP |
 | [soc-lab-free](https://github.com/sandeepmothukuri/soc-lab-free) | Free SOC lab — OpenVAS, Wazuh, pfSense, Proxmox Mail, Lynis |
