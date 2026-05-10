@@ -198,7 +198,7 @@ sudo systemctl restart wazuh-manager
 
 ![Network](images/logs/sysmon-process/sysmon-logs-network.png)
 ![Event Log](images/logs/sysmon-process/generated-event-is-recorded-in-the-windows-event-log.png)
-![RDP Issue](images/logs/sysmon-process/sysmon-event-id-3---rdp-logon-issue-initiated--field-allways-false.png)
+![RDP Issue](images/logs/sysmon-process/sysmon-event-id-3---rdp-logon-issue-initiated--field-always-false.png)
 ![Workstation](images/logs/sysmon-process/workstation-logs.png)
 
 ---
@@ -233,3 +233,7 @@ sudo systemctl restart wazuh-manager
 | [soc-lab-free](https://github.com/sandeepmothukuri/soc-lab-free) | Free SOC lab — OpenVAS, Wazuh, pfSense, Proxmox Mail, Lynis |
 | [soc-lab](https://github.com/sandeepmothukuri/soc-lab) | SOC analyst home lab — Wazuh SIEM, Sysmon, MITRE ATT&CK mapping |
 | [cyberblue](https://github.com/sandeepmothukuri/cyberblue) | Containerised blue team platform — SIEM, DFIR, CTI, SOAR, Network Analysis |
+
+
+---
+⭐ **Star this repo if it helped you — it helps other SOC analysts find it!**
