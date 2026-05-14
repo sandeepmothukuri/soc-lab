@@ -237,3 +237,4 @@ sudo systemctl restart wazuh-manager
 
 ---
 ⭐ **Star this repo if it helped you — it helps other SOC analysts find it!**
+
